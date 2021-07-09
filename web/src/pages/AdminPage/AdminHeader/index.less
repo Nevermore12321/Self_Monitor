@@ -1,0 +1,101 @@
+@import '../CommonStyles/default';
+
+.header-common {
+    //  绝对定位，不占有位置
+    position: absolute;
+
+    width: 100%;
+
+    // z-index 设置元素的堆叠顺序。
+    z-index: 10;
+
+    //  nav 就是 Row 的样式
+    .nav {
+        //  最大宽度
+        max-width: 424px;
+
+        //  文字居中
+        text-align: center;
+
+        //  外边距
+        margin: auto;
+
+        //  &表示父选择器，也就是  .nav-title
+        &-title {
+            //  display: 规定元素应该生成的框的类型。
+            //  none: 元素隐藏； block：块级元素（独占一行，大小可变）;  inline: 行内元素（不自动换行，不改变大小）; inline-block: 本身是inline，但是又block属性
+            display: inline-block;
+            //  内边距
+            padding-top: 22px;
+            //  上边框
+            border-top: 2px solid transparent;
+            transition: border .3s @ease-out;
+            color: #fff;
+            //  规定要显示的光标的类型
+            cursor: pointer;
+
+            //  在 nav-title 上鼠标悬停的效果  出现边框
+            &:hover {
+                border-top-color: #fff;
+            }
+        }
+    }
+}
+
+.header-tip-wrap {
+    //  修改 antd 默认的  tooltips 组件的  边框颜色
+    .ant-tooltip-arrow {
+        border-bottom-color: rgba(1, 24, 116, .96);
+    }
+
+    //  修改 antd 默认的 tooltips 组件内容的 格式
+    .ant-tooltip-inner {
+        //  tooltips 组件内 的背景色 与 边框一致
+        background-color: rgba(1, 24, 116, .96);
+
+        //  阴影
+        box-shadow: 0 8px 16px #001b72;
+        padding: 0;
+        max-width: none;
+        //  overflow: 表示元素溢出时采取的措施
+        //  hiden: 溢出内容隐藏   visible: 溢出会在元素之外  scroll: 溢出内容隐藏，但显示滚动条
+        overflow: hidden;
+
+        //  每一个 tooltips 中的 子标题的 样式
+        .tip-block {
+            //  弹性布局
+            display: flex;
+
+            // align-items 属性定义flex子项在flex容器的当前行的侧轴（纵轴）方向上的对齐方式。 剧中对其
+            align-items: center;
+            padding: 26px;
+            min-width: 296px;
+            transition: background .3s @ease-in-out;
+            background: rgba(1, 24, 116, 0);
+
+            //  子标题前的 img 为 inline-block
+            .tip-img {
+                display: inline-block;
+            }
+
+            //  子标题 和 描述信息 的 文字格式
+            .tip-content {
+                display: inline-block;
+                color: #fff;
+                margin-left: 16px;
+                line-height: 22px;
+
+                //  下面是 子选择器  div 也就是 描述信息
+                >div {
+                    //  规定元素的不透明级别。
+                    opacity: 0.65;
+                    font-size: 12px;
+                    line-height: 20px;
+                }
+            }
+            &:hover{
+                background-color: rgb(1, 24, 116);
+            }
+        }
+    }
+}
