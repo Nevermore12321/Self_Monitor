@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"errors"
+	"strings"
 
 	"api/internal/svc"
 	"api/internal/types"
@@ -24,7 +26,11 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) LoginLogic {
 }
 
 func (l *LoginLogic) Login(req types.LoginReq) (*types.LoginReply, error) {
-	// todo: add your logic here and delete this line
+	if len(strings.TrimSpace(req.Username)) == 0  || len(strings.TrimSpace(req.Password)) == 0 {
+		return nil, errors.New("参数错误")
+	}
+
+
 
 	return &types.LoginReply{}, nil
 }

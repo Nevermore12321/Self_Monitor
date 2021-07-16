@@ -2,7 +2,8 @@ package svc
 
 import (
 	"api/internal/config"
-	userModel "github.com/Nevermore12321/Self_Monitor/server/api-gateway/model"
+	"github.com/tal-tech/go-zero/core/stores/sqlx"
+	userModel "guoshaohe.com/api_gateway_model/user_info"
 )
 
 type ServiceContext struct {
@@ -12,7 +13,9 @@ type ServiceContext struct {
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
+	conn := sqlx.NewMysql(c.Mysql.DataSource)
 	return &ServiceContext{
 		Config: c,
+		UserModel: userModel.NewUserModel(conn, c.CacheRedis),
 	}
 }

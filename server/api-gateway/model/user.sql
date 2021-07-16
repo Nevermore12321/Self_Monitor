@@ -10,7 +10,7 @@ CREATE TABLE `user` (
                         `job` varchar(255) DEFAULT '' COMMENT '职业',
                         `birth` varchar(255) DEFAULT '' COMMENT '生日',
                         `icon` varchar(50) DEFAULT NULL COMMENT '图标',
-                        `status` tinyint(4) DEFAULT NULL COMMENT '状态(0:禁止,1:正常)',
+                        `status` tinyint(5) DEFAULT NULL COMMENT '状态(0:禁止,1:正常)',
                         `role_id` int(10) unsigned NOT NULL COMMENT '角色编号',
                         `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                         `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

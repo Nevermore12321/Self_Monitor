@@ -1,4 +1,4 @@
-module github.com/Nevermore12321/Self_Monitor/server/api-gateway/model
+module guoshaohe.com/api_gateway_model
 
 go 1.16
 
