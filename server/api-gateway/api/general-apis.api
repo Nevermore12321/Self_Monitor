@@ -1,0 +1,30 @@
+syntax = "v1"
+
+info(
+	title: "Self_Monitor Api-Gateway"
+	desc: "General restful Apis such as login, logout etc."
+	author: "gsh"
+	email: "842125706@qq.com"
+	version: "v1"
+)
+
+type (
+	LoginReq {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
+	LoginReply {
+		Id           int64  `json:"id"`
+		UserName     string `json:"username"`
+		UserId       string `json:"userid"`
+		AccessToken  string `json:"accessToken"`
+		AccessExpire int64  `json:"accessExpire"`
+		RefreshAfter int64  `json:"refreshAfter"`
+	}
+)
+
+service api-gateway {
+	@handler login
+	post /user/login (LoginReq) returns (LoginReply)
+}
