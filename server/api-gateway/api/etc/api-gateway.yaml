@@ -7,3 +7,7 @@ CacheRedis:
   - Host: 192.168.1.101:6379
     Pass: gsh123
     Type: node
+
+Auth:
+  AccessSecret: guoshaohe.com
+  AccessExpire: 86400
