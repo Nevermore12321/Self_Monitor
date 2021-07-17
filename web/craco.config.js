@@ -4,22 +4,20 @@
 * - whenProd - process.env.NODE_ENV === 'production'
 */
 const {
-    when, whenDev, whenProd
-} = require('@craco/craco')
+    when, whenDev, whenProd,
+} = require('@craco/craco');
 
 // 判断编译环境是否为生产
-const isBuildAnalyzer = process.env.BUILD_ANALYZER === 'true'
+const isBuildAnalyzer = process.env.BUILD_ANALYZER === 'true';
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const CracoLessPlugin = require('craco-less');
+const WebpackBar = require('webpackbar');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
-const CracoLessPlugin = require("craco-less")
-const WebpackBar = require('webpackbar')
-const CircularDependencyPlugin = require('circular-dependency-plugin')
-const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
+const path = require('path');
 
-const path = require('path')
-const pathResolve = pathUrl => path.join(__dirname, pathUrl)
-
-
+const pathResolve = pathUrl => path.join(__dirname, pathUrl);
 
 module.exports = {
     webpack: {
@@ -32,7 +30,7 @@ module.exports = {
             '@hooks': pathResolve('src/hooks'),
             '@pages': pathResolve('src/pages'),
             '@store': pathResolve('src/store'),
-            '@utils': pathResolve('src/utils')
+            '@utils': pathResolve('src/utils'),
             // 此处是一个示例，实际可根据各自需求配置
         },
         plugins: [
@@ -50,9 +48,9 @@ module.exports = {
                         include: /src/,
                         failOnError: true,
                         allowAsyncCycles: false,
-                        cwd: process.cwd()
+                        cwd: process.cwd(),
                     }),
-                ], []
+                ], [],
             ),
             // 打包产物分析插件
             ...when(
@@ -60,22 +58,22 @@ module.exports = {
                     new BundleAnalyzerPlugin({
                         analyzerMode: 'static', // html 文件方式输出编译分析
                         openAnalyzer: false,
-                        reportFilename: path.resolve(__dirname, `analyzer/index.html`)
-                    })
-                ], []
+                        reportFilename: path.resolve(__dirname, 'analyzer/index.html'),
+                    }),
+                ], [],
             ),
             ...whenProd(
                 () => [
                     new CompressionWebpackPlugin({
                         algorithm: 'gzip',
-                        test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
+                        test: new RegExp(`\\.(${  [ 'js', 'css' ].join('|')  })$`),
                         threshold: 1024,
-                        minRatio: 0.8
-                    })
-                ], []
+                        minRatio: 0.8,
+                    }),
+                ], [],
             ),
 
-        ]
+        ],
     },
     plugins: [
         {
@@ -103,39 +101,38 @@ module.exports = {
                     },
                 },
             },
-        }
+        },
     ],
     babel: {
         plugins: [
             // 添加装饰器语法
-            ["@babel/plugin-proposal-decorators", { legacy: true }],
+            [ '@babel/plugin-proposal-decorators', { legacy: true } ],
             // antd 按需加载
             [
-                "import",
+                'import',
                 {
-                    "libraryName": "antd",
-                    "libraryDirectory": "es",
-                    "style": true //设置为true即是less
-                }
-            ]
+                    'libraryName': 'antd',
+                    'libraryDirectory': 'es',
+                    'style': true, // 设置为true即是less
+                },
+            ],
         ],
-        loaderOptions: {},
         loaderOptions: (babelLoaderOptions, {
-            env, paths
+            env, paths,
         }) => {
-            return babelLoaderOptions
-        }
+            return babelLoaderOptions;
+        },
     },
     devServer: {
         proxy: {
-            "/api": {
-                target: "http://baidu.com",
-                //target: 'http://192.168.9.19:8080',
+            '/api': {
+                target: 'http://127.0.0.1:8888',
+                // target: 'http://192.168.9.19:8080',
                 changeOrigin: true,
                 pathRewrite: {
-                    "^/api": ""
-                }
-            }
-        }
-    }
-}
+                    '^/api': '/api',
+                },
+            },
+        },
+    },
+};

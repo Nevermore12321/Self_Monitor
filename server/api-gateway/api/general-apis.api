@@ -26,5 +26,5 @@ type (
 
 service api-gateway {
 	@handler login
-	post /user/login (LoginReq) returns (LoginReply)
+	post /api/v1/user/login (LoginReq) returns (LoginReply)
 }

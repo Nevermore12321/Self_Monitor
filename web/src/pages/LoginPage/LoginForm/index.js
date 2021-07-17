@@ -6,7 +6,7 @@
  * @time: 2020/6/29 15:23
 */
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import {
     Form, Input, Button, Checkbox, Row, Col,
 } from 'antd';
@@ -15,18 +15,31 @@ import Captcha from 'react-captcha-code';
 import GlobalContext from '@/store/GlobalObjects';
 import { withRouter } from 'react-router-dom';
 import './index.less';
+import { axiosPost } from '@/utils/requests.axios';
 import PropTypes from 'prop-types';
 
 function LoginForm(props) {
     //  从全局 Context 中取出 LoginStatus 的 dispatch 函数
-    const { loginStatusState, loginStatusDispatch } = GlobalContext;
+    const { loginStatusState, loginStatusDispatch } = useContext(GlobalContext);
 
-    const onFinish = () => {
+    const onFinish = (values) => {
         console.log('login finish');
         // todo:
         //  1.设置 isLogin = true
         //  2. 发送请求并验证
-        // loginStatusDispatch({ type: 'LOGIN', payload: { userName: 'loginUser' } });
+        const data = {
+            'username': values.username,
+            'password': values.password,
+        };
+
+        console.log(data);
+        axiosPost('/user/login',data).then(res => {
+            console.log('login success: ', res);
+        }).catch(err => {
+            console.log('login failed: ', err);
+        });
+
+        loginStatusDispatch({ type: 'LOGIN', payload: { userName: 'loginUser' } });
 
         // props.loginAction();
     };
