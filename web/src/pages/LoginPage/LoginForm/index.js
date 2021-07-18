@@ -27,6 +27,7 @@ function LoginForm(props) {
         // todo:
         //  1.设置 isLogin = true
         //  2. 发送请求并验证
+        //  3. 获取到 jwt token 存入 localstorage
         const data = {
             'username': values.username,
             'password': values.password,
@@ -35,6 +36,8 @@ function LoginForm(props) {
         console.log(data);
         axiosPost('/user/login',data).then(res => {
             console.log('login success: ', res);
+            console.log('jwt token: ', res.data.accessToken);
+            window.localStorage.setItem('token', res.data.accessToken);
         }).catch(err => {
             console.log('login failed: ', err);
         });
